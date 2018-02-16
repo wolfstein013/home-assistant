@@ -91,13 +91,6 @@ sensor:
 - zonnestand:
   platform: yr
 
-# philips heu
-# - philips:
-#   platform: rest
-#   resource: http://192.168.13.246/api/9BkDsdhJu1m0HatAoRE7tgxMan9d4kojzk65X-N7/sensors/1
-#   value_template: '{{ value_json.state.presence }}' 
-#   scan_interval: 2
-
 - haveibeenpwned:
   platform: haveibeenpwned
   email: !secret pwndmail
