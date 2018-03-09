@@ -113,6 +113,16 @@ automation:
       entity_id: switch.stekkerdoos1
 
 
+- alias: deurbel
+  trigger:
+    platform: state
+    entity_id: switch.reciever
+    from: 'off'
+    to: 'on'
+  action:
+    service: switch.turn_on
+    entity_id: switch.stekkerdoos4
+
 - alias: poe
   trigger:
     platform: state
