@@ -78,7 +78,7 @@ switch:
 
 - stekkerdoos:
   platform: revogi
-  host: 192.168.13.106
+  host: 192.168.13.240
   name: stekkerdoos
 
 # stekkerdoos1 = switch
