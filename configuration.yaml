@@ -1,26 +1,15 @@
 homeassistant:
-  # 
-  # Name of the location where Home Assistant is running
   name: Home
-  # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 1
-# 
-  # metric for Metric, imperial for Imperial
   unit_system: metric
-
-
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Amsterdam
-
   latitude: !secret wolfstein_latitude 
   longitude: !secret wolfstein_longitude 
-
-notify:
-  - name: notify
-    platform: syslog
-
-# Show links to resources in log and frontend
-introduction:
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.13.0/24
+        - 127.0.0.1
 
 # Enables the frontend
 frontend:
@@ -28,149 +17,27 @@ frontend:
 # Enables configuration UI
 discovery:
 
+api:
+  api_password: !secret http_password
+  api_port: 8123
 
 http:
   # Uncomment this to add a password (recommended!)
   api_password: !secret http_password
   base_url: ns.wolfstein.nl:8123
   server_port: 8123
-  trusted_networks: 
-    - 192.168.13.0/24
-    - 127.0.0.1
 
-  # Uncomment this if you are using SSL or running in Docker etc
-  # base_url: example.duckdns.org:8123
 
-# Checks for available updates
-updater:
-
-# Enables support for tracking state changes over time.
-history:
-
-# View all events in a logbook
-logbook:
+tplink: 
+  discovery: true
+  switch: 
+    - host: 192.168.13.241
+    - host: 192.168.13.242
+    - host: 192.168.13.243
+    - host: 192.168.13.244
 
 switch:
-- switch1:
-  platform: tplink
-  host: 192.168.13.241
-  name: slaapkamer
-
-- switch2:
-  platform: tplink
-  host: 192.168.13.242
-  name: reciever
-
-- switch3:
-  platform: tplink
-  host: 192.168.13.243
-  name: tvmedia
-
-- switch4:
-  platform: tplink
-  host: 192.168.13.244
-  name: office
-
-- switch5:
-  platform: tplink
-  host: 192.168.13.245
-  name: accespoint
-
-- stekkerdoos:
   platform: revogi
   host: 192.168.13.240
   name: stekkerdoos
 
-# stekkerdoos1 = switch
-# stekkerdoos2 = poe
-# stekkerdoos3 = 
-# stekkerdoos4 = bel 
-
-# Weather Prediction
-sensor:
-- zonnestand:
-  platform: yr
-
-- haveibeenpwned:
-  platform: haveibeenpwned
-  email: !secret pwndmail
-
-remote:
-- platform: harmony
-  host: 192.168.13.248
-  name: harmony
-
-# script:
-automation:
-- alias: tvmedia
-  trigger:
-    platform: state
-    entity_id: switch.tvmedia
-    from: 'off'
-    to: 'on'
-  action:
-    - service: switch.turn_on
-      entity_id: switch.stekkerdoos1
-
-
-- alias: deurbel
-  trigger:
-    platform: state
-    entity_id: switch.reciever
-    from: 'off'
-    to: 'on'
-  action:
-    service: switch.turn_on
-    entity_id: switch.stekkerdoos4
-
-- alias: poe
-  trigger:
-    platform: state
-    entity_id: switch.stekkerdoos2
-    from: 'off'
-    to: 'on'
-  action:
-    service: switch.turn_on
-    entity_id: switch.stekkerdoos1
-
-
-- alias: tvmedia_off 
-  trigger: 
-    - platform: state
-      entity_id: switch.tvmedia
-      to: 'off'
-  action:
-    - service: notify.notify
-      data:
-        message: switching..... 
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: switch.tvmedia
-          state: 'off'
-        - condition: state
-          entity_id: switch.stekkerdoos2
-          state: 'off'    
-    - service: switch.turn_off
-      entity_id: switch.stekkerdoos1
-     
-
-- alias: tvmedia_off2
-  trigger:
-    - platform: state    
-      entity_id: switch.stekkerdoos2
-      to: 'off'
-  action:
-    - service: notify.notify
-      data:
-        message: switching..... 
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: switch.tvmedia
-          state: 'off'
-        - condition: state
-          entity_id: switch.stekkerdoos2
-          state: 'off'    
-    - service: switch.turn_off
-      entity_id: switch.stekkerdoos1
