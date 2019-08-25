@@ -17,6 +17,26 @@ frontend:
 # Enables configuration UI
 discovery:
 
+# Checks for available updates
+updater:
+
+logger:
+  default: critical
+
+recorder:
+  purge_keep_days: 5
+
+# Enables support for tracking state changes over time.
+history:
+
+influxdb:
+  host: !secret wolfstein_url
+  database: thuis
+  username: !secret influxdb_user
+  password: !secret influxdb_pass
+# View all events in a logbook
+logbook:
+
 api:
   api_password: !secret http_password
   api_port: 8123
@@ -24,7 +44,7 @@ api:
 http:
   # Uncomment this to add a password (recommended!)
   api_password: !secret http_password
-  base_url: ns.wolfstein.nl:8123
+  base_url: (!secret wolfstein_url):8123
   server_port: 8123
 
 
@@ -41,3 +61,51 @@ switch:
   host: 192.168.13.240
   name: stekkerdoos
 
+
+input_datetime:
+  both_date_and_time:
+    name: Input with both date and time
+    has_date: true
+    has_time: true
+  only_date:
+    name: Input with only date
+    has_date: true
+    has_time: false
+  only_time:
+    name: Input with only time
+    has_date: false
+    has_time: true
+
+automation: 
+  - alias: "turn off tv in bedroom"
+    trigger: 
+      platform: time
+      at: '9:00:00' 
+    action: 
+      service: homeassistant.turn_off
+      entity_id: switch.slaapkamer
+  
+  - alias: "turn on tv in living"
+    trigger: 
+        platform: time
+        at: '6:45:00' 
+    action: 
+        service: homeassistant.turn_on
+        entity_id: switch.reciever
+
+
+
+# sensor:
+# #     platform: dsmr
+#     port: /dev/ttyUSB0
+#     dsmr_version: 5
+# group: 
+#     meter_readings: 
+#         name: meter readings
+#         entities: 
+#             - sensor.power_consumpion_normal
+
+remote: 
+  - platform: harmony
+    name: harmony
+    host: 192.168.13.248
