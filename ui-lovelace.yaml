@@ -1,7 +1,8 @@
 title: My Awesome Home
 views:
-    # View tab title.
   - title: Example
+    background: radial-gradient(crimson, skyblue)
+    theme: dark-mode
     cards:
         # The markdown card will render markdown text.
       - type: markdown
@@ -36,19 +37,9 @@ views:
                action: toggle
              hold_action:
                action: more-info 
-      
 
 
-      - type: glance
-        title: boven
-        show_state: true
-        entities:    
-          - entity: switch.poe
-            name: wifi
-            icon: mdi:cctv
-            style: 
-              -- iron-icon-fill-color: "#11AB7D"          
-            tap_action: 
-              action: toggle
-            hold_action:
-              action: more-info 
+# tap_action: 
+#          action: toggle
+#          entity: switch.turn_off
+#      entity: switch.poe
