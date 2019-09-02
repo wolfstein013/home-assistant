@@ -1,0 +1,54 @@
+title: My Awesome Home
+views:
+    # View tab title.
+  - title: Example
+    cards:
+        # The markdown card will render markdown text.
+      - type: markdown
+        title: Lovelace
+        content: >
+          Welcome to your **Lovelace UI**.
+      
+      - type: glance
+        title: beneden
+        show_state: true
+        entities:    
+          -  entity: switch.office
+             name: kantoor
+             # icon: mdi:cellphone-link
+             state_icon:
+               "on": mdi:cellphone-link
+               "off": mdi:cellphone-link-off
+             tap_action: 
+               action: toggle
+             hold_action:
+               action: more-info 
+          -  entity: switch.stekkerdoos5
+             name: playstation
+             tap_action: 
+               action: toggle
+             hold_action:
+               action: more-info 
+          -  entity: group.watch_tv
+             name: "tv kijken" 
+             icon: mdi:television
+             tap_action: 
+               action: toggle
+             hold_action:
+               action: more-info 
+      
+
+
+      - type: glance
+        title: boven
+        show_state: true
+        entities:    
+          - entity: switch.poe
+            name: wifi
+            icon: mdi:cctv
+            style: 
+              -- iron-icon-fill-color: "#11AB7D"          
+            tap_action: 
+              action: toggle
+            hold_action:
+              action: more-info 
