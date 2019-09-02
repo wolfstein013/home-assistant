@@ -20,8 +20,17 @@ discovery:
 # Checks for available updates
 updater:
 
+#lovelace: 
+#  mode: yaml
+
+
 logger:
-  default: critical
+  default: info
+  logs: 
+    homeassistant.core: debug
+
+
+
 
 recorder:
   purge_keep_days: 5
@@ -30,7 +39,7 @@ recorder:
 history:
 
 influxdb:
-  host: !secret wolfstein_url
+  host: 192.168.13.1
   database: thuis
   username: !secret influxdb_user
   password: !secret influxdb_pass
@@ -93,18 +102,12 @@ automation:
         service: homeassistant.turn_on
         entity_id: switch.reciever
 
-
-
-# sensor:
-# #     platform: dsmr
-#     port: /dev/ttyUSB0
-#     dsmr_version: 5
-# group: 
-#     meter_readings: 
-#         name: meter readings
-#         entities: 
-#             - sensor.power_consumpion_normal
-
+binary_sensor:
+  - platform: ping
+    host: meetstation.wolfstein.nl
+    name: meetstation
+    count: 2
+    scan_interval: 30 
 remote: 
   - platform: harmony
     name: harmony
