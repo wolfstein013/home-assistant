@@ -1,25 +1,16 @@
 title: My Awesome Home
 views:
-  - title: Example
+  - title: Beneden
     background: radial-gradient(crimson, skyblue)
     theme: dark-mode
     cards:
-        # The markdown card will render markdown text.
-      - type: markdown
-        title: Lovelace
-        content: >
-          Welcome to your **Lovelace UI**.
-      
       - type: glance
         title: beneden
         show_state: true
         entities:    
           -  entity: switch.office
              name: kantoor
-             # icon: mdi:cellphone-link
-             state_icon:
-               "on": mdi:cellphone-link
-               "off": mdi:cellphone-link-off
+             icon: mdi:cellphone-link
              tap_action: 
                action: toggle
              hold_action:
@@ -37,9 +28,59 @@ views:
                action: toggle
              hold_action:
                action: more-info 
+          -  entity: switch.poe
+             name: "wired network" 
+             icon: mdi:server-network
+             tap_action: 
+               action: toggle
+             hold_action:
+               action: more-info 
 
 
-# tap_action: 
-#          action: toggle
-#          entity: switch.turn_off
-#      entity: switch.poe
+  - title: boven
+    background: radial-gradient(crimson, skyblue)
+    theme: dark-mode
+    cards:
+      - type: glance    
+        title: boven
+        show_state: true
+        entities:    
+        -  entity: switch.poe
+           name: "wifi"
+           icon: mdi:wifi
+           tap_action: 
+             action: toggle
+           hold_action:
+             action: more-info 
+        -  entity: switch.slaapkamer
+           name: "slaapkamer TV"
+           icon: mdi:television-guide
+           tap_action: 
+             action: toggle
+           hold_action:
+             action: more-info 
+
+ 
+  - title: boven2
+    background: radial-gradient(crimson, skyblue)
+    theme: dark-mode
+    type: horizontal-stack
+    cards:
+    - type: glance 
+      entities:
+        -  entity: switch.poe
+           name: "wifi"
+           icon: mdi:wifi
+           tap_action: 
+             action: toggle
+           hold_action:
+             action: more-info 
+    cards:
+    - type: glance 
+      entities:
+        -  entity: switch.slaapkamer
+           name: "slaapkamer TV"
+           icon: mdi:television-guide
+           tap_action: 
+             action: toggle
+           hold_action:
